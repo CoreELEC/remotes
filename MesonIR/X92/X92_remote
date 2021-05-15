@@ -1,0 +1,29 @@
+# table X92, type: NEC
+0x140 KEY_POWER			# <power>
+0x118 KEY_VOLUMEUP
+0x110 KEY_VOLUMEDOWN
+0x143 KEY_INFO			# <config>		# config, info			# settings button
+0x100 KEY_LANGUAGE		# <language>		# switch language		# mouse button
+0x119 KEY_ESC			# <escape>
+0x116 KEY_UP
+0x151 KEY_LEFT
+0x113 KEY_ENTER
+0x150 KEY_RIGHT
+0x11a KEY_DOWN
+0x111 KEY_HOME			# <home>		# Player information		# home button
+0x14c KEY_MENU			# <start>		# IPTV channel list		# menu button 
+0x159 KEY_REWIND
+0x15a KEY_PLAYPAUSE
+0x158 KEY_FASTFORWARD
+0x147 KEY_EPG			# <epg>			# EPG				# @ button
+0x101 KEY_0
+0x142 KEY_BACKSPACE		# <backspace>
+0x14e KEY_1
+0x10d KEY_2
+0x10c KEY_3
+0x14a KEY_4
+0x109 KEY_5
+0x108 KEY_6
+0x146 KEY_7
+0x105 KEY_8
+0x104 KEY_9

@@ -1,0 +1,6 @@
+# table riii25, type: NEC
+0x8051 KEY_POWER
+0x801b KEY_BACK
+0x8053 KEY_HOME
+0x8049 KEY_MENU
+
