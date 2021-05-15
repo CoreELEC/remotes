@@ -4,7 +4,7 @@ Centralized repository for unaltered Remote Control Unit (RCU) configuration fil
 
 **License**
 
-The contents of the repository are released under [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
+The contents of the repository are released under a [Fair Use](https://support.google.com/legal/answer/4558992) agreement.
 
 **Disclaimer**
 
