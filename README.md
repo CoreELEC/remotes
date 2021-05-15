@@ -5,7 +5,7 @@
 
 **License**
 
-The contents of The Repository are released under a [Fair Use](https://support.google.com/legal/answer/4558992) agreement.
+The contents of The Repository are released under a [Fair Use](http://www.dmlp.org/legal-guide/fair-use) agreement.
 
 **Credits**
 
