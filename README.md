@@ -2,11 +2,11 @@
 
 Centralized repository for unaltered Remote Control Unit (RCU) configuration files for use with LibreELEC, CoreELEC, other forks of OpenELEC (Open Embedded Linux Entertainment Center), and Android TV.
 
-##License##
+**License**
 
 The contents of the repository are released under [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
 
-##*Disclaimer*
+**Disclaimer**
 
 The Repository for AmRemote & Meson Infrared Remote Controllers and its maintainers (short: The Repository) give no warranty and accept no responsibility or liability for the accuracy or the completeness of the information and materials contained in the repository.
 
