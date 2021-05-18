@@ -22,7 +22,7 @@
 0xdf5f KEY_INFO
 0xdf01 KEY_EPG
 0xdf1c KEY_POWER
-0xdf42 KEY_HOME # home
-0xdf41 KEY_FAVORITE # planet
-0xdf03 KEY_CONTEXT_MENU # mouse
-0xdf10 KEY_BACK # back
+0xdf42 KEY_HOME           # HOME
+0xdf41 KEY_FAVORITE       # PLANET
+0xdf03 KEY_CONTEXT_MENU   # MOUSE
+0xdf10 KEY_BACK           # BACK
