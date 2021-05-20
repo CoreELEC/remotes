@@ -24,8 +24,8 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
- - OS: [CoreELEC]
- - Version [19.2 Matrix]
+ - OS: [e.g. CoreELEC]
+ - Version [e.g. 19.2 Matrix]
 
 **Media station (please complete the following information):**
  - Device: [e.g. TaNiX TX3]
