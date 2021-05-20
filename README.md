@@ -9,7 +9,7 @@ The contents of The Repository are released under a Creative Commons [CC0 1.0 Un
 
 **Credits**
 
-Many individuals and entities worldwide have contributed to The Repository. The Repository acknowledges each of them, and thanks them for their time and contribution.
+Many individuals and entities worldwide have contributed to The Repository. The Repository acknowledges each of them, and thanks them for their time, effort, and contribution.
 
 **Disclaimer**
 
