@@ -3,6 +3,8 @@
 
 *Repository for Remote Control Unit (RCU) configuration files for use with LibreELEC, CoreELEC, other forks of OpenELEC (Open Embedded Linux Entertainment Center), and Android TV.*
 
+Please consult the [Remotes Wiki](https://github.com/CoreELEC/remotes/wiki) for any questions, prior to seeking support in the [user forum](https://discourse.coreelec.org/t/repository-for-amremote-meson-ir-remote-controllers/11023).
+
 **License**
 
 The contents of The Repository are released under a [Creative Commons CC0 1.0 Universal License Agreement](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
