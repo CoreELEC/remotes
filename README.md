@@ -9,6 +9,8 @@ Please consult the [Remotes Wiki](https://github.com/CoreELEC/remotes/wiki) prio
 
 The contents of The Repository are released under a [Creative Commons CC0 1.0 Universal License Agreement](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
 
+![CC0](https://user-images.githubusercontent.com/49594656/122680938-7362b080-d1b7-11eb-8350-d6f5821779e3.png)
+
 **Credits**
 
 Many entities worldwide have contributed to The Repository. The Repository acknowledges each of them, and thanks them for their time, effort, and contribution.
