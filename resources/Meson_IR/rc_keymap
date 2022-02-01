@@ -1,0 +1,301 @@
+NAME
+       rc_keymap - toml file describing remote control keymap
+
+DESCRIPTION
+       An  rc_keymap describes a remote control. It list the protocols used, and the mapping from
+       decoded IR to linux input events. This file is used by ir-keytable(1) for IR decoding, and
+       by ir-ctl(1) for sending IR.
+
+       The  file format is toml. Since a remote control can use multiple protocols, the top level
+       is an array of protocols. The vast majority of remotes only use one protocol.
+
+KEYMAP PROTOCOL ENTRY
+       For each protocol the remote uses, there should be one entry in the  top  level  protocols
+       array.
+
+   Name Field
+       Each  protocols  entry  has  a name field. The name is not used by ir-keytable, but can be
+       used to give the remote control a more descriptive name than the file name, e.g. the model
+       number.
+
+   Protocol Field
+       The  protocol  field  specifies  the  protocol. This can either be one of the linux kernel
+       decoders, in which case it is nec, rc-5, rc-6, jvc, sony, sanyo, rc-5-sz, sharp,  mce-kbd,
+       xmp,  imon, rc-mm, other or unknown. If it does not match any of these entries, then it is
+       assumed to be a BPF based decoder. The unknown and other are protocols decoded by specific
+       RC devices where the protocol is either unknown or proprietary, respectively.
+
+       There   are   some  pre-defined  BPF  protocol  decoders,  which  are  listed  below.  See
+       ⟨https://lwn.net/Articles/759188/⟩ for how to write your own.
+
+   Variant Field
+       The variant field specifies which variant a particular protocol  uses.   The  sony,  rc-5,
+       rc-6  protocols  have  different  bit  length  variants,  for  example.  This field is not
+       currently used. However, this is needed should the keymap be used for sending  IR,  rather
+       than decoding it.
+
+       The following variants are currently defined:
+
+       Protocol rc-5 has variants rc-5, rc-5x-20, rc-5-sz.
+
+       Protocol nec has variants nec, nec-x, nec-32.
+
+       Protocol sony has variants sony-12, sony-15, sony-20.
+
+       Protocol rc-6 has variants rc-6-0, rc-6-6a-20, rc-6-6a-24, rc-6-6a-32, rc-6-mce.
+
+       Protocol rc-mm has variants rc-mm-12, rc-mm-24, and rc-mm-32.
+
+   Scancodes field
+       The scancodes table list the scancodes and the mapping to linux input key events. Multiple
+       scancodes can map to the same key event. This field is not present for raw protocols.
+
+       If the scancode start with 0x, it is interpreted as a hexadecimal  number.  If  it  starts
+       with a 0, it is interpreted as an octal number.
+
+       The key events are listed in the input-event-codes.h header file.  Examples are KEY_ENTER,
+       KEY_ESC or BTN_LEFT for the left mouse button.
+
+   Raw field
+       If the protocol is raw, the raw field is an array of keycode  to  raw  mapping.  For  each
+       entry,  there  is  a  keycode  field and raw field. The keycode is a linux input event, as
+       explained the scancodes section.
+
+       The raw field is an string, which lists pulse and space values, separated  by  whitespace.
+       The  first  is  a  pulse value microseconds, and the second a space, third pulse, etc. The
+       space values can be preceded by a - sign and the pulse value can be preceded by  a  +sign.
+       There should be an odd number of value so that the last entry is a pulse.
+
+   Remaining fields (BPF parameters)
+       If  the  protocol  is  a  BPF based decoder, it may have any number of numeric parameters.
+       These parameters are used to support protocols with  non-standard  signaling  lengths  for
+       standard  IR  protocols.  Any other field specified here which is required by the selected
+       BPF decoder will be used. All other fields are ignored.
+
+       Kernel based non-BPF protocol decoders do not have any parameters.
+
+BPF PROTOCOLS
+       Some of the BPF protocol decoders are generic and will need parameters to work. Other  are
+       for  specific  remotes  and should work without any parameters.  The timing parameters are
+       all in microseconds (µs).
+
+   raw
+       This decoder must be used when the keymap is raw; for each key, there is an entry  in  raw
+       array  with  the pulse and space values for that key. No decoding is done, the incoming IR
+       is simply matched against the different pulse and space values.
+
+   imon_rsc
+       This decoder is specifically for the iMON RSC remote, which was  packaged  with  the  iMON
+       Station  (amongst others). The decoder is for the directional stick in the middle; it will
+       decode them into mouse movements. The buttons are all encoded using nec-x  so  the  keymap
+       needs two protocols to work correctly.
+
+       This is unrelated to the imon protocol.
+
+       margin Define how much tolerance there is for message length. Default 200.
+
+   grundig
+       This decoder is specifically for old grundig remotes.
+
+       header_pulse
+              Length of first pulse, default 900.
+
+       header_space
+              Length of following space, default 2900.
+
+       leader_pulse
+              Length of second pulse, default 1300.
+
+   xbox
+       This  decoder  is  specifically for the XBox Remote DVD, which is for the first generation
+       XBox.
+
+       margin Define how much tolerance there is for message length. Default 200.
+
+   manchester
+       Most manchester encoded remote controls are either rc-5, rc-6, or rc-mm.  Some remote  use
+       a  different variant (e.g. they might have a header pulse) and that is what the decoder is
+       for. Some parameters must be specified, by default it is set up for rc-5.
+
+       margin Define how much tolerance there is for message length. Default 200.
+
+       header_pulse
+              Define how long a leading pulse is. This is not always present. Default 0.
+
+       header_space
+              Define how long the space is after the leading pulse. Must be set  if  header_pulse
+              is set.
+
+       zero_pulse, zero_space, one_pulse, one_space
+              Signally  lengths  for bits. See ⟨https://clearwater.com.au/code/rc5⟩ for these are
+              defined.
+
+       bits   Number of bits. Default 14.
+
+       scancode_mask
+              Bits to mask out of resulting scancode.
+
+       toggle_bit
+              Bit that specifies the toggle. If this value is greater than the number of bits, no
+              toggle is defined.
+
+   pulse_distance
+       This  is  a generic decoder for protocols that define bits by distance between pulses, and
+       the pulses are always of the same length. The most well known protocol like this  is  nec.
+       This decoder is cases where nec is not used. The parameters must be set.
+
+       margin Define how much tolerance there is for message length. Default 200.
+
+       header_pulse
+              Length of the first leading pulse. Default 2125.
+
+       header_space
+              Length of the space after the leading pulse. Default 1875.
+
+       repeat_pulse
+              Length of the leading pulse for key repeat. Default 0.
+
+       repeat_space
+              Length of the space after the leading pulse for key repeat. Default 0.
+
+       bit_pulse
+              Length of the pulse for each bit. Default 625.
+
+       bit_0_space
+              Length of the space for a zero bit. Default 375.
+
+       bit_1_space
+              Length of the space for a one bit. Default 1625.
+
+       trailer_pulse
+              Length  of  the  pulse after the last bit. Needed to bookend the last bit.  Default
+              625.
+
+       bits   Number of bits. Default 4.
+
+       reverse
+              Should the bits be read in least significant bit first. Set to non-zero to  enable.
+              Default 0.
+
+       header_optional
+              Some remotes do not send the header pulse and space for key repeats, so set this to
+              non-zero to make the header optional. Default 0.
+
+              An alternative implementation might only allow missing headers for repeat messages,
+              but  this would fail to decode key presses if the first message with the header did
+              not decode correctly to due interference.
+
+   pulse_length
+       This is a generic decoder for protocols that define bits by  length  of  pulses,  and  the
+       spaces  are  always  the same. The sony protocol is the most well-known protocol, but this
+       decoder is for protocols which are not sony.
+
+       margin Define how much tolerance there is for message length. Default 200.
+
+       header_pulse
+              Length of the first leading pulse. Default 2125.
+
+       header_space
+              Length of the space after the leading pulse. Default 1875.
+
+       repeat_pulse
+              Length of the leading pulse for key repeat. Default 0.
+
+       repeat_space
+              Length of the space after the leading pulse for key repeat. Default 0.
+
+       bit_space
+              Length of the space for each bit. Default 625.
+
+       bit_0_pulse
+              Length of the pulse for a zero bit. Default 375.
+
+       bit_1_pulse
+              Length of the pulse for a one bit. Default 1625.
+
+       trailer_pulse
+              Length of the pulse after the last bit. Optional. Default 0.
+
+       bits   Number of bits. Default 4.
+
+       reverse
+              Should the bits be read in least significant bit first. Set to non-zero to  enable.
+              Default 0.
+
+       header_optional
+              Some remotes do not send the header pulse and space for key repeats, so set this to
+              non-zero to make the header optional. Default 0.
+
+              An alternative implementation might only allow missing headers for repeat messages,
+              but  this would fail to decode key presses if only the first message did not decode
+              correctly to due interference.
+
+EXAMPLE
+       [[protocols]]
+       name = "iMON Station RSC"
+       protocol = "nec"
+       variant = "necx"
+       [protocols.scancodes]
+       0x801010 = "KEY_EXIT"
+       0x80102f = "KEY_POWER"
+       0x80104a = "KEY_SCREENSAVER"
+       0x801049 = "KEY_TIME"
+       0x801054 = "KEY_NUMERIC_1"
+       0x801055 = "KEY_NUMERIC_2"
+       0x801056 = "KEY_NUMERIC_3"
+       0x801057 = "KEY_NUMERIC_4"
+       0x801058 = "KEY_NUMERIC_5"
+       0x801059 = "KEY_NUMERIC_6"
+       0x80105a = "KEY_NUMERIC_7"
+       0x80105b = "KEY_NUMERIC_8"
+       0x80105c = "KEY_NUMERIC_9"
+       0x801081 = "KEY_SCREEN"
+       0x80105d = "KEY_NUMERIC_0"
+       0x801082 = "KEY_MAX"
+       0x801048 = "KEY_ESC"
+       0x80104b = "KEY_MEDIA"
+       0x801083 = "KEY_MENU"
+       0x801045 = "KEY_APPSELECT"
+       0x801084 = "KEY_STOP"
+       0x801046 = "KEY_CYCLEWINDOWS"
+       0x801085 = "KEY_BACKSPACE"
+       0x801086 = "KEY_KEYBOARD"
+       0x801087 = "KEY_SPACE"
+       0x80101e = "KEY_RESERVED"
+       0x801098 = "BTN_0"
+       0x80101f = "KEY_TAB"
+       0x80101b = "BTN_LEFT"
+       0x80101d = "BTN_RIGHT"
+       0x801016 = "BTN_MIDDLE"
+       0x801088 = "KEY_MUTE"
+       0x80105e = "KEY_VOLUMEDOWN"
+       0x80105f = "KEY_VOLUMEUP"
+       0x80104c = "KEY_PLAY"
+       0x80104d = "KEY_PAUSE"
+       0x80104f = "KEY_EJECTCD"
+       0x801050 = "KEY_PREVIOUS"
+       0x801051 = "KEY_NEXT"
+       0x80104e = "KEY_STOP"
+       0x801052 = "KEY_REWIND"
+       0x801053 = "KEY_FASTFORWARD"
+       0x801089 = "KEY_ZOOM"
+       [[protocols]]
+       protocol = "imon_rsc"
+
+BUGS
+       Report bugs to Linux Media Mailing List <linux-media@vger.kernel.org>
+
+COPYRIGHT
+       Copyright (C) 2019 by Sean Young <sean@mess.org>
+
+       License GPLv2: GNU GPL version 2 <http://gnu.org/licenses/gpl.html>.
+       This is free software: you are free to change and redistribute it.  There is NO  WARRANTY,
+       to the extent permitted by law.
+
+SEE ALSO
+       ir-keytable(1) and ir-ctl(1)
+
+       https://lwn.net/Articles/759188/
+
+       https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/uapi/linux/input-
+       event-codes.h#n64
