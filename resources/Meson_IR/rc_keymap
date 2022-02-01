@@ -2,6 +2,7 @@ NAME
        rc_keymap - toml file describing remote control keymap
 
 DESCRIPTION
+
        An  rc_keymap describes a remote control. It list the protocols used, and the mapping from
        decoded IR to linux input events. This file is used by ir-keytable(1) for IR decoding, and
        by ir-ctl(1) for sending IR.
@@ -10,6 +11,7 @@ DESCRIPTION
        is an array of protocols. The vast majority of remotes only use one protocol.
 
 KEYMAP PROTOCOL ENTRY
+
        For each protocol the remote uses, there should be one entry in the  top  level  protocols
        array.
 
@@ -75,6 +77,7 @@ KEYMAP PROTOCOL ENTRY
        Kernel based non-BPF protocol decoders do not have any parameters.
 
 BPF PROTOCOLS
+
        Some of the BPF protocol decoders are generic and will need parameters to work. Other  are
        for  specific  remotes  and should work without any parameters.  The timing parameters are
        all in microseconds (µs).
@@ -231,6 +234,7 @@ BPF PROTOCOLS
               correctly to due interference.
 
 EXAMPLE
+
        [[protocols]]
        name = "iMON Station RSC"
        protocol = "nec"
@@ -283,9 +287,11 @@ EXAMPLE
        protocol = "imon_rsc"
 
 BUGS
+
        Report bugs to Linux Media Mailing List <linux-media@vger.kernel.org>
 
 COPYRIGHT
+
        Copyright (C) 2019 by Sean Young <sean@mess.org>
 
        License GPLv2: GNU GPL version 2 <http://gnu.org/licenses/gpl.html>.
@@ -293,6 +299,7 @@ COPYRIGHT
        to the extent permitted by law.
 
 SEE ALSO
+
        ir-keytable(1) and ir-ctl(1)
 
        https://lwn.net/Articles/759188/
