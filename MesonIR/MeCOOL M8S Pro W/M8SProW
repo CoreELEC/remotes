@@ -1,4 +1,4 @@
-# table M8S Pro W, type: NEC
+# table M8SProW, type: NEC
 0x59 KEY_POWER
 0x08 KEY_PREVIOUSSONG
 0x0b KEY_NEXTSONG
