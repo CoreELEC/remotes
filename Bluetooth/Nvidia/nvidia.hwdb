@@ -1,0 +1,4 @@
+# NVIDIA SHIELD Remote
+evdev:input:b0005v0955p7217*
+ KEYBOARD_KEY_c0041=enter
+ KEYBOARD_KEY_c01b8=o
