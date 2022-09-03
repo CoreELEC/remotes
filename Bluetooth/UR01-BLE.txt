@@ -1,0 +1,62 @@
+cat /proc/bus/input/devices
+
+I: Bus=0005 Vendor=005d Product=0001 Version=0003
+N: Name="UR01-BLE Mouse"
+P: Phys=20:50:e7:7c:6c:6f
+S: Sysfs=/devices/virtual/misc/uhid/0005:005D:0001.0002/input/input9
+U: Uniq=20:19:70:00:08:d6
+H: Handlers=mouse0 event8
+B: PROP=0
+B: EV=17
+B: KEY=70000 0 0 0 0 0 0 0 0
+B: REL=903
+B: MSC=10
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+evtest /dev/input/event7
+Input driver version is 1.0.1
+Input device ID: bus 0x5 vendor 0x5d product 0x1 version 0x3
+Input device name: "UR01-BLE Consumer Control"
+Supported events:
+  Event type 0 (EV_SYN)
+  Event type 1 (EV_KEY)
+    Event code 1 (KEY_ESC)
+...
+Properties:
+Testing ... (interrupt to exit)
+Event: time 1662166274.114914, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0041
+Event: time 1662166274.114914, type 1 (EV_KEY), code 28 (KEY_ENTER), value 1
+Event: time 1662166274.114914, -------------- SYN_REPORT ------------
+Event: time 1662166274.361911, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0041
+Event: time 1662166274.361911, type 1 (EV_KEY), code 28 (KEY_ENTER), value 0
+Event: time 1662166274.361911, -------------- SYN_REPORT ------------
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+udevadm info /dev/input/event7
+
+P: /devices/virtual/misc/uhid/0005:005D:0001.0002/input/input8/event7
+M: event7
+R: 7
+U: input
+D: c 13:71
+N: input/event7
+L: 0
+E: DEVPATH=/devices/virtual/misc/uhid/0005:005D:0001.0002/input/input8/event7
+E: DEVNAME=/dev/input/event7
+E: MAJOR=13
+E: MINOR=71
+E: SUBSYSTEM=input
+E: USEC_INITIALIZED=23603871
+E: KEYBOARD_KEY_c0041=enter
+E: ID_INPUT=1
+E: ID_INPUT_KEY=1
+E: ID_BUS=bluetooth
+E: LIBINPUT_DEVICE_GROUP=5/5d/1:20:50:e7:7c:6c:6f
+E: TAGS=:power-switch:
+E: CURRENT_TAGS=:power-switch:
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+

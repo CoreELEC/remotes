@@ -1,0 +1,196 @@
+Steps:
+
+- install system tools from coreelec program addons repo
+- ssh into device
+- systemctl stop kodi
+- cat /proc/bus/input/devices
+- evtest /dev/input/event9
+- udevadm info /dev/input/event9
+- cd /etc/udev/hwdb.d/
+- nano 10-remotename.hwdb
+- udevadm hwdb --update
+- udevadm trigger -s input
+reboot
+
+
+========================================================================================================
+
+https://discourse.coreelec.org/t/dune-remote-r3/19079/3
+
+First you have to install the System Tools addon from the Programs Addons. 
+After that you SSH into your device 
+Then you run 
+cat /proc/bus/input/devices 
+and check the vendor and bus of your remote to put on the file you will create. 
+Then run 
+
+systemctl stop kodi 
+
+and after that 
+
+evtest
+
+Chose your BT remote and press the ok key to check the code.
+
+Then you create a file like the one in the example:
+
+cd /etc/udev/hwdb.d/
+nano 10-ur01.hwdb
+
+In the file you put your remote vendor and bus and the code for ok 
+
+(don’t forget to leave a space before “Key…” )
+
+========================================================================================================
+
+https://discourse.coreelec.org/t/alfawise-z1-bluetooth-remote-configuration/2955/6
+
+How do I get device’ name?
+
+Run the command 
+
+  udevadm info /dev/input/eventX 
+
+being X the number of the event you want to change.
+
+I suppose you already ran 
+
+  evtest.
+
+The output of uvedam... will have this part 
+
+  DEVPATH=/devices/virtual/misc/uhid/0005:0957:1001.0002/input/input7 
+
+and in order 0005 is b and so on.
+
+========================================================================================================
+
+Peter:
+
+If there is a file in image you can overwrite the content this way. Or create new filename for new remote.
+System tools addon has a tool called evtest for similar things.
+This is text file which can be made by user itself and put into folder /storage/.config/hwdb.d/
+
+# BuzzTV BT-300/BT-400 smart remote
+evdev:input:b0005v0957p1001*
+ KEYBOARD_KEY_c0040=c
+ KEYBOARD_KEY_c0041=enter
+ KEYBOARD_KEY_70040=z
+ KEYBOARD_KEY_70041=esc
+ KEYBOARD_KEY_70042=t
+ KEYBOARD_KEY_70043=e
+ KEYBOARD_KEY_70044=o
+ KEYBOARD_KEY_70045=volumeup
+ KEYBOARD_KEY_70069=volumedown
+
+========================================================================================================
+
+https://discourse.coreelec.org/t/report-about-amlogic-s905x4-hk1-rbox-x4/18603/220
+
+thanks for your suggestion , i have debugged the data for you which can guide someone who needs to do it
+
+cat /proc/bus/input/devices
+
+I: Bus=0005 Vendor=005d Product=0001 Version=0003
+N: Name="UR01-BLE"
+P: Phys=a0:67:20:e0:6f:47
+S: Sysfs=/devices/virtual/misc/uhid/0005:005D:0001.0001/input/input6
+U: Uniq=20:19:70:00:23:45
+H: Handlers=sysrq kbd mouse1 event6 
+B: PROP=0
+B: EV=10001f
+B: KEY=3007f 0 0 0 0 483ffff 17aff32d bf544446 0 0 70001 130ff3 8b17c007 ffff7bfa d9415fff febeffdf ffefffff ffffffff fffffffe
+B: REL=143
+B: ABS=1 0
+B: MSC=10
+
+cd /etc/udev/hwdb.d/
+nano 10-ur01.hwdb
+
+* Content
+
+evdev:input:b0005v005d*
+ KEYBOARD_KEY_c0041=enter
+
+udevadm hwdb --update
+udevadm trigger -s input
+reboot
+
+ALL KEYS ON UR-01
+
+Event: time 1657643216.407118, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0030
+Event: time 1657643216.407118, type 1 (EV_KEY), code 116 (KEY_POWER), value 1
+Event: time 1657643216.407118, -------------- SYN_REPORT ------------
+Event: time 1657643216.619090, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0030
+Event: time 1657643216.619090, type 1 (EV_KEY), code 116 (KEY_POWER), value 0
+Event: time 1657643216.619090, -------------- SYN_REPORT ------------
+Event: time 1657643231.953581, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0042
+Event: time 1657643231.953581, type 1 (EV_KEY), code 103 (KEY_UP), value 1
+Event: time 1657643231.953581, -------------- SYN_REPORT ------------
+^[[AEvent: time 1657643232.110577, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0042
+Event: time 1657643232.110577, type 1 (EV_KEY), code 103 (KEY_UP), value 0
+Event: time 1657643232.110577, -------------- SYN_REPORT ------------
+Event: time 1657643233.495497, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0045
+Event: time 1657643233.495497, type 1 (EV_KEY), code 106 (KEY_RIGHT), value 1
+Event: time 1657643233.495497, -------------- SYN_REPORT ------------
+^[[CEvent: time 1657643233.651609, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0045
+Event: time 1657643233.651609, type 1 (EV_KEY), code 106 (KEY_RIGHT), value 0
+Event: time 1657643233.651609, -------------- SYN_REPORT ------------
+Event: time 1657643234.249618, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0043
+Event: time 1657643234.249618, type 1 (EV_KEY), code 108 (KEY_DOWN), value 1
+Event: time 1657643234.249618, -------------- SYN_REPORT ------------
+^[[BEvent: time 1657643234.405625, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0043
+Event: time 1657643234.405625, type 1 (EV_KEY), code 108 (KEY_DOWN), value 0
+Event: time 1657643234.405625, -------------- SYN_REPORT ------------
+Event: time 1657643234.969681, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0044
+Event: time 1657643234.969681, type 1 (EV_KEY), code 105 (KEY_LEFT), value 1
+Event: time 1657643234.969681, -------------- SYN_REPORT ------------
+^[[DEvent: time 1657643235.181686, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0044
+Event: time 1657643235.181686, type 1 (EV_KEY), code 105 (KEY_LEFT), value 0
+Event: time 1657643235.181686, -------------- SYN_REPORT ------------
+Event: time 1657643256.132325, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0041
+Event: time 1657643256.132325, type 1 (EV_KEY), code 353 (KEY_SELECT), value 1
+Event: time 1657643256.132325, -------------- SYN_REPORT ------------
+Event: time 1657643256.133301, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0041
+Event: time 1657643256.133301, type 1 (EV_KEY), code 353 (KEY_SELECT), value 0
+Event: time 1657643256.133301, -------------- SYN_REPORT ------------
+Event: time 1657643269.028747, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0224
+Event: time 1657643269.028747, type 1 (EV_KEY), code 158 (KEY_BACK), value 1
+Event: time 1657643269.028747, -------------- SYN_REPORT ------------
+Event: time 1657643269.029721, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0224
+Event: time 1657643269.029721, type 1 (EV_KEY), code 158 (KEY_BACK), value 0
+Event: time 1657643269.029721, -------------- SYN_REPORT ------------
+Event: time 1657643269.754729, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0223
+Event: time 1657643269.754729, type 1 (EV_KEY), code 172 (KEY_HOMEPAGE), value 1
+Event: time 1657643269.754729, -------------- SYN_REPORT ------------
+Event: time 1657643269.911722, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0223
+Event: time 1657643269.911722, type 1 (EV_KEY), code 172 (KEY_HOMEPAGE), value 0
+Event: time 1657643269.911722, -------------- SYN_REPORT ------------
+Event: time 1657643271.093813, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0040
+Event: time 1657643271.093813, type 1 (EV_KEY), code 139 (KEY_MENU), value 1
+Event: time 1657643271.093813, -------------- SYN_REPORT ------------
+Event: time 1657643271.249783, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0040
+Event: time 1657643271.249783, type 1 (EV_KEY), code 139 (KEY_MENU), value 0
+Event: time 1657643271.249783, -------------- SYN_REPORT ------------
+Event: time 1657643272.746866, type 4 (EV_MSC), code 4 (MSC_SCAN), value c00ea
+Event: time 1657643272.746866, type 1 (EV_KEY), code 114 (KEY_VOLUMEDOWN), value 1
+Event: time 1657643272.746866, -------------- SYN_REPORT ------------
+Event: time 1657643272.948858, type 4 (EV_MSC), code 4 (MSC_SCAN), value c00ea
+Event: time 1657643272.948858, type 1 (EV_KEY), code 114 (KEY_VOLUMEDOWN), value 0
+Event: time 1657643272.948858, -------------- SYN_REPORT ------------
+Event: time 1657643274.591876, type 4 (EV_MSC), code 4 (MSC_SCAN), value c00e9
+Event: time 1657643274.591876, type 1 (EV_KEY), code 115 (KEY_VOLUMEUP), value 1
+Event: time 1657643274.591876, -------------- SYN_REPORT ------------
+Event: time 1657643274.793904, type 4 (EV_MSC), code 4 (MSC_SCAN), value c00e9
+Event: time 1657643274.793904, type 1 (EV_KEY), code 115 (KEY_VOLUMEUP), value 0
+Event: time 1657643274.793904, -------------- SYN_REPORT ------------
+Event: time 1657643277.708005, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0221
+Event: time 1657643277.708005, type 1 (EV_KEY), code 217 (KEY_SEARCH), value 1
+Event: time 1657643277.708005, -------------- SYN_REPORT ------------
+Event: time 1657643277.708942, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0221
+Event: time 1657643277.708942, type 1 (EV_KEY), code 217 (KEY_SEARCH), value 0
+Event: time 1657643277.708942, -------------- SYN_REPORT ------------
+
+----------------
+https://manpages.ubuntu.com/manpages/xenial/man8/run-parts.8.html
+https://python-evdev.readthedocs.io/en/latest/tutorial.html

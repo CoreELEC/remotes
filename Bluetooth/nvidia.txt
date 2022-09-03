@@ -1,0 +1,90 @@
+CoreELEC:~ # cat /proc/bus/input/devices 
+
+I: Bus=0005 Vendor=0955 Product=7217 Version=0002
+N: Name="NVIDIA SHIELD Remote"
+P: Phys=20:50:e7:7c:6c:6f
+S: Sysfs=/devices/virtual/misc/uhid/0005:0955:7217.0005/input/input9
+U: Uniq=a4:c1:38:d2:a6:03
+H: Handlers=kbd event9
+B: PROP=0
+B: EV=1b
+B: KEY=200 2 0 0 0 0 2010000 1110 40000800 1c1680 0 0 0
+B: ABS=100 0
+B: MSC=10
+
+======================================================================
+
+CoreELEC:~ # evtest /dev/input/event9
+
+Input driver version is 1.0.1
+Input device ID: bus 0x5 vendor 0x955 product 0x7217 version 0x2
+Input device name: "NVIDIA SHIELD Remote"
+Supported events:
+  Event type 0 (EV_SYN)
+  Event type 1 (EV_KEY)
+    Event code 103 (KEY_UP)
+    Event code 105 (KEY_LEFT)
+    Event code 106 (KEY_RIGHT)
+    Event code 108 (KEY_DOWN)
+    Event code 114 (KEY_VOLUMEDOWN)
+    Event code 115 (KEY_VOLUMEUP)
+    Event code 116 (KEY_POWER)
+    Event code 139 (KEY_MENU)
+    Event code 158 (KEY_BACK)
+    Event code 164 (KEY_PLAYPAUSE)
+    Event code 168 (KEY_REWIND)
+    Event code 172 (KEY_HOMEPAGE)
+    Event code 208 (KEY_FASTFORWARD)
+    Event code 217 (KEY_SEARCH)
+    Event code 353 (KEY_SELECT)
+    Event code 393 (KEY_VIDEO)
+  Event type 3 (EV_ABS)
+    Event code 40 (ABS_MISC)
+      Value      0
+      Min        0
+      Max        1
+  Event type 4 (EV_MSC)
+    Event code 4 (MSC_SCAN)
+Properties:
+Testing ... (interrupt to exit)
+Event: time 1662152630.222944, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0041
+Event: time 1662152630.222944, type 1 (EV_KEY), code 353 (KEY_SELECT), value 1
+Event: time 1662152630.222944, -------------- SYN_REPORT ------------
+Event: time 1662152630.421979, type 3 (EV_ABS), code 40 (ABS_MISC), value 1
+Event: time 1662152630.421979, -------------- SYN_REPORT ------------
+Event: time 1662152630.446975, type 4 (EV_MSC), code 4 (MSC_SCAN), value c0041
+Event: time 1662152630.446975, type 1 (EV_KEY), code 353 (KEY_SELECT), value 0
+Event: time 1662152630.446975, -------------- SYN_REPORT ------------
+^C
+CoreELEC:~ #
+
+======================================================================
+
+CoreELEC:~ # udevadm info /dev/input/event9
+
+P: /devices/virtual/misc/uhid/0005:0955:7217.0005/input/input9/event9
+M: event9
+R: 9
+U: input
+D: c 13:73
+N: input/event9
+L: 0
+E: DEVPATH=/devices/virtual/misc/uhid/0005:0955:7217.0005/input/input9/event9
+E: DEVNAME=/dev/input/event9
+E: MAJOR=13
+E: MINOR=73
+E: SUBSYSTEM=input
+E: USEC_INITIALIZED=30838729
+E: ID_INPUT=1
+E: ID_INPUT_KEY=1
+E: ID_BUS=bluetooth
+E: LIBINPUT_DEVICE_GROUP=5/955/7217:20:50:e7:7c:6c:6f
+E: TAGS=:power-switch:
+E: CURRENT_TAGS=:power-switch:
+
+======================================================================
+
+# NVIDIA smart remote
+evdev:input:b0005v0955p7217*
+ KEYBOARD_KEY_c0041=enter
+

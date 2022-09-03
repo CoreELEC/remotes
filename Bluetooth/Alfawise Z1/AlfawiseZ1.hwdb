@@ -1,0 +1,3 @@
+# Alfawise Z1
+evdev:input:b0005v2B54p1603e*
+ KEYBOARD_KEY_c0041=enter
