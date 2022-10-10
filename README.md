@@ -1,4 +1,4 @@
-![image](https://user-images.githubusercontent.com/49594656/194789799-8216d16b-6d55-41c4-8289-27595a52055f.png)
+![image](https://user-images.githubusercontent.com/49594656/194790136-d3d5679d-2adf-4e8c-91fc-dc8ee0f7e359.png)
 
 ## Repository for AmRemote & Meson IR Remote Controllers
 
