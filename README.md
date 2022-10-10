@@ -1,4 +1,5 @@
-![114545454](https://user-images.githubusercontent.com/49594656/118380872-f8e8b480-b5aa-11eb-8a1f-2ead6e99fc40.jpg)
+![image](https://user-images.githubusercontent.com/49594656/194789799-8216d16b-6d55-41c4-8289-27595a52055f.png)
+
 ## Repository for AmRemote & Meson IR Remote Controllers
 
 *Repository for Remote Control Unit (RCU) configuration files for use with LibreELEC, CoreELEC, other forks of OpenELEC (Open Embedded Linux Entertainment Center), and Android TV.*
