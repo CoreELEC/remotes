@@ -1,0 +1,3 @@
+# Zidoo V10
+evdev:input:b0005v2B54p1600*
+ KEYBOARD_KEY_c0041=enter
