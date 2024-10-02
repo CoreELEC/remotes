@@ -1,4 +1,0 @@
-# Ugoos UR01-BLE Consumer Control
-evdev:input:b0005v005Dp0001*
- KEYBOARD_KEY_c0041=enter
- KEYBOARD_KEY_c0040=c
